@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'rtb.Main'
+
+repositories {
+    mavenCentral()
+}
+
+/*jar {
+    manifest {
+        attributes(
+                'Main-Class': 'rtb.Server'
+        )
+    }
+}*/
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "org.nanohttpd:nanohttpd:2.3.1"
+}
+
+run {
+    standardInput = System.in
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(appArgs)
+    }
+}
