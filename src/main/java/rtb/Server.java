@@ -13,13 +13,15 @@ import fi.iki.elonen.util.ServerRunner;
 public class Server extends NanoHTTPD {
 
     private static final Logger LOG = Logger.getLogger(Server.class.getName());
+    private FileTraverser traverser;
 
     public void Start() {
         ServerRunner.run(Server.class);
     }
 
-    public Server() {
+    public Server() throws Exception {
         super(8000);
+        traverser = new FileTraverser("file.txt");
     }
 
     @Override
@@ -35,9 +37,9 @@ public class Server extends NanoHTTPD {
         }
 
         String uri = session.getUri();
-        int lineNumber;
+        long lineNumber;
         try {
-            lineNumber = Integer.parseInt(uri.substring(1));
+            lineNumber = Long.parseLong(uri.substring(1));
         } catch (NumberFormatException e) {
             return newFixedLengthResponse(Status.BAD_REQUEST, MIME_PLAINTEXT, "Uri should be an integer");
         }
@@ -49,7 +51,6 @@ public class Server extends NanoHTTPD {
         //Server.LOG.info(method + " '" + uri + "' ");
         //parms.get("user")
 
-        FileTraverser traverser = new FileTraverser();
         String line;
         try {
             line = traverser.getLine(lineNumber);
