@@ -7,21 +7,24 @@ import java.util.logging.Logger;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
-import fi.iki.elonen.util.ServerRunner;
 
 
 public class Server extends NanoHTTPD {
 
-    private static final Logger LOG = Logger.getLogger(Server.class.getName());
+    //private static final Logger LOG = Logger.getLogger(Server.class.getName());
     private FileTraverser traverser;
 
-    public void Start() {
-        ServerRunner.run(Server.class);
+    public Server(String path) throws Exception {
+        super(8000);
+        traverser = new FileTraverser(path);
     }
 
-    public Server() throws Exception {
-        super(8000);
-        traverser = new FileTraverser("file.txt");
+    public void StartServing() throws Exception {
+        start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
+    }
+
+    public void StopServing() {
+        stop();
     }
 
     @Override
@@ -41,11 +44,11 @@ public class Server extends NanoHTTPD {
         try {
             lineNumber = Long.parseLong(uri.substring(1));
         } catch (NumberFormatException e) {
-            return newFixedLengthResponse(Status.BAD_REQUEST, MIME_PLAINTEXT, "Uri should be an integer");
+            return newFixedLengthResponse(Status.BAD_REQUEST, MIME_PLAINTEXT, "Uri should be a 64bit integer");
         }
 
-        if (lineNumber < 0) {
-            return newFixedLengthResponse(Status.BAD_REQUEST, MIME_PLAINTEXT, "Uri should be a non-negative integer");
+        if (lineNumber <= 0) {
+            return newFixedLengthResponse(Status.BAD_REQUEST, MIME_PLAINTEXT, "Uri should be positive");
         }
 
         //Server.LOG.info(method + " '" + uri + "' ");

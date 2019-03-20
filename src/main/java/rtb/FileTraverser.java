@@ -39,6 +39,9 @@ public class FileTraverser {
 
             String line = null;
             for (long i = lower_line; i != nr && (line = br.readLine()) != null; i++);
+            if (line == null) {
+                throw new Exception("Line number too big");
+            }
             return line;
         }
     }
