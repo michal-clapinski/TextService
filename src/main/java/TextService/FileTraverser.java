@@ -1,4 +1,4 @@
-package rtb;
+package TextService;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class FileTraverser {
     private static final int line_diff = 256;
-    private ArrayList<Long> line_positions;
+
+    private ArrayList<Long> line_positions = new ArrayList<>();
     private String path;
 
     public FileTraverser(String path) throws Exception {
         this.path = path;
-        line_positions = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = null;

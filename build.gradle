@@ -3,19 +3,11 @@ plugins {
     id 'application'
 }
 
-mainClassName = 'rtb.Main'
+mainClassName = 'TextService.Main'
 
 repositories {
     mavenCentral()
 }
-
-/*jar {
-    manifest {
-        attributes(
-                'Main-Class': 'rtb.Server'
-        )
-    }
-}*/
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

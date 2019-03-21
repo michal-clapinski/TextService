@@ -1,0 +1,17 @@
+Test run:
+
+    gradle run -PappArgs="['<path to input file>']"
+
+Proper usage:
+    gradle build
+    cd build/distributions
+    unzip TextService.zip
+    cd TextService/bin
+    ./TextService <path to input file>
+
+Log can be found at `FileService.log`.
+
+TODO:
+1. Properly handle exceptions
+2. Better logger
+3. Maybe split classes differently
