@@ -9,6 +9,7 @@ Proper usage:
     cd TextService/bin
     ./TextService <path to input file>
 
+Initialization can take a few minutes depending on your disk's transfer rate.
 Log can be found at `FileService.log`.
 
 TODO:
